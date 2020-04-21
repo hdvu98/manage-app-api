@@ -39,7 +39,7 @@ MemberSchema.statics = {
   },
 
   getByID: function (query) {
-    return this.find(query);
+    return this.findOne(query);
   },
   update: function (query, updateData) {
     return this.findOneAndUpdate(query, { $set: updateData }, { new: true });

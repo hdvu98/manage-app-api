@@ -42,7 +42,14 @@ module.exports = {
       .then((data) => res.send(data))
       .catch((err) => res.status(400).send({ message: err.message }));
   },
-  getMemberByID: (req, res, next) => {},
+  getMemberByID: (req, res, next) => {
+    Member.get({ _id: req.params.id })
+      .then((data) => {
+        if (data.length > 0) res.send(data[0]);
+        res.send(data);
+      })
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
   updateMember: (req, res, next) => {},
   remove: (req, res, next) => {},
 };

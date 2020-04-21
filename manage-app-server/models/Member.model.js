@@ -20,7 +20,6 @@ let MemberSchema = new mongoose.Schema(
       type: Date,
       unique: false,
       required: true,
-      timezone: 'Asia/Bangkok',
     },
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }],
   },

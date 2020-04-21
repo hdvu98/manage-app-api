@@ -74,12 +74,12 @@ module.exports = {
         return res.status(400).send({
           message: 'birthday format is invalid',
         });
-      member = { ...member, birthday: birthday };
+      member = { ...member, birthday: new Date(birthday) };
     }
-
-    console.log(member);
     Member.update({ _id: req.params.id }, member)
       .then((data) => {
+        if (!data)
+          return res.status(400).send({ message: 'the member not exits' });
         return res.send(data);
       })
       .catch((err) => res.status(400).send({ message: err.message }));
@@ -88,7 +88,11 @@ module.exports = {
     const { id } = req.params;
     if (!id) return res.status(400).send({ message: 'invaid id' });
     Member.delete({ _id: id })
-      .then((data) => res.send({ message: `removed the member: ${id}` }))
+      .then((data) => {
+        if (data) return res.send({ message: `removed the member: ${id}` });
+        else
+          return res.status(400).send({ message: 'the memeber id not exits' });
+      })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
 };

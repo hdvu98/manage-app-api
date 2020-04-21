@@ -37,4 +37,12 @@ module.exports = {
         res.status(400).send({ message: err.message });
       });
   },
+  getMembers: (req, res, next) => {
+    Member.get({})
+      .then((data) => res.send(data))
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
+  getMemberByID: (req, res, next) => {},
+  updateMember: (req, res, next) => {},
+  remove: (req, res, next) => {},
 };

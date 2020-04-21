@@ -164,4 +164,28 @@ module.exports = {
       })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
+  getAvailableMember: async (req, res, next) => {
+    var { id } = req.params;
+    if (!id || !objectIDValidation(id))
+      return res.status(400).send({ message: 'project ID is Invalid' });
+    var members = [];
+    var memberInProject = [];
+    try {
+      members = await Member.get({});
+    } catch (err) {
+      return res.status(400).send({ message: err.message });
+    }
+    try {
+      var projects = await Project.get({ _id: id });
+      if (projects.length) {
+        memberInProject = projects[0].assignees;
+      } else return res.status(400).send({ message: 'project is not exists' });
+    } catch (err) {
+      return res.status(400).send({ message: err.message });
+    }
+    var available = members.filter(
+      (item) => !memberInProject.includes(item._id)
+    );
+    return res.send(available);
+  },
 };

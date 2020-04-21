@@ -9,4 +9,5 @@ router.put('/update/:id', Project.updateProject);
 router.delete('/remove/:id', Project.remove);
 router.put('/assign/:id', Project.assignMemberToProject);
 router.put('/remove-member/:id', Project.removeMemberFromProject);
+router.get('/get-available-member/:id', Project.getAvailableMember);
 module.exports = router;

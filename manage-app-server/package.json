@@ -1,0 +1,35 @@
+{
+  "name": "manage-app-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hdvu98/manage-app-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "mongoose"
+  ],
+  "author": "Duong Vu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hdvu98/manage-app-api/issues"
+  },
+  "homepage": "https://github.com/hdvu98/manage-app-api#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.9.10"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.3",
+    "prettier": "^2.0.4"
+  }
+}

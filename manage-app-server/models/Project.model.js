@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const _ = require('lodash');
 const Schema = mongoose.Schema;
 let ProjectSchema = new mongoose.Schema(
   {
@@ -31,7 +32,7 @@ ProjectSchema.methods.assign = function (member) {
 ProjectSchema.methods.removeMember = function (member) {
   if (!this.assignees.includes(member))
     throw new Error('member is not exists in the project');
-  _.remove(this.assignees, function (id) {
+  this.assignees = _.remove(this.assignees, function (id) {
     return id === member;
   });
   return this.save();

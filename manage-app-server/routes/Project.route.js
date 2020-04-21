@@ -8,4 +8,5 @@ router.get('/get/:id', Project.getProjectByID);
 router.put('/update/:id', Project.updateProject);
 router.delete('/remove/:id', Project.remove);
 router.put('/assign/:id', Project.assignMemberToProject);
+router.put('/remove-member/:id', Project.removeMemberFromProject);
 module.exports = router;

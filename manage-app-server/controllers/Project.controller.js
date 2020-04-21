@@ -22,7 +22,11 @@ module.exports = {
         res.status(400).send({ message: err.message });
       });
   },
-  getProjects: (req, res, next) => {},
+  getProjects: (req, res, next) => {
+    Project.get({})
+      .then((data) => res.send(data))
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
   getProjectByID: (req, res, next) => {},
   updateProject: (req, res, next) => {},
   remove: (req, res, next) => {},

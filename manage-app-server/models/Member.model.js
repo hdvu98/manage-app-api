@@ -24,12 +24,12 @@ let MemberSchema = new mongoose.Schema(
   }
 );
 
-MemberSchema.methods.joinProject = (project) => {
-  this.projects.push(project);
+MemberSchema.methods.joinProject = function (c) {
+  this.projects.push(c);
   return this.save();
 };
 MemberSchema.statics = {
-  create: (data) => {
+  create: function (data) {
     var newMember = new this(data);
     return newMember.save();
   },

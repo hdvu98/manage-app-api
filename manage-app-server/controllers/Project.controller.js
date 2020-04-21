@@ -2,7 +2,10 @@ const moment = require('moment');
 const Project = require('./../models/Project.model');
 const Member = require('./../models/Member.model');
 
-const { projectNameValidation } = require('./../utils/helpers');
+const {
+  projectNameValidation,
+  objectIDValidation,
+} = require('./../utils/helpers');
 module.exports = {
   createProject: (req, res, next) => {
     var { project_name, description } = req.body;
@@ -99,4 +102,36 @@ module.exports = {
       })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
+  assignMemberToProject: async (req, res, next) => {
+    var { assignee } = req.body;
+    var { id } = req.params;
+    if (!id || !objectIDValidation(id))
+      return res.status(400).send({ message: 'project ID is Invalid' });
+    if (!assignee || !objectIDValidation(assignee)) {
+      return res.status(400).send({ message: 'Member id is Invalid' });
+    }
+    try {
+      var member = await Member.get({ _id: assignee });
+      if (!member.length) {
+        return res.status(400).send({ message: 'member ID is not exits' });
+      }
+    } catch (err) {
+      return res.status(400).send({ message: 'error when find member ID' });
+    }
+    Project.get({ _id: id })
+      .then((data) => {
+        if (data.length) {
+          data[0]
+            .assign(assignee)
+            .then((data) => {
+              return res.send(data);
+            })
+            .catch((err) => res.status(400).send({ message: err.message }));
+        } else {
+          return res.status(400).send({ message: 'project ID is not exits' });
+        }
+      })
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
+  removeMemberFromProject: (req, res, next) => {},
 };

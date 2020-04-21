@@ -23,7 +23,17 @@ let ProjectSchema = new mongoose.Schema(
 );
 
 ProjectSchema.methods.assign = function (member) {
+  if (this.assignees.includes(member))
+    throw new Error('member has alredy existed in the project');
   this.assignees.push(member);
+  return this.save();
+};
+ProjectSchema.methods.removeMember = function (member) {
+  if (!this.assignees.includes(member))
+    throw new Error('member is not exists in the project');
+  _.remove(this.assignees, function (id) {
+    return id === member;
+  });
   return this.save();
 };
 ProjectSchema.statics = {

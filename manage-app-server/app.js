@@ -34,7 +34,9 @@ db.mongoose
   });
 
 const memberRouter = require('./routes/Member.route');
+const projectRouter = require('./routes/Project.route');
 app.use('/member', memberRouter);
+app.use('/project', projectRouter);
 app.listen(PORT, () => {
   console.log(`Server is up and running on port numner  ${PORT}`);
 });

@@ -1,4 +1,5 @@
 const moment = require('moment');
+var mongoose = require('mongoose');
 const lodash = require('lodash');
 const dateFormat = require('../constants/dateFormat');
 const { VN_PHONE, FULLNAME, PROJECT_NAME } = require('../constants/regex');
@@ -42,6 +43,9 @@ const formatPhoneNumber = (phoneNumber) => {
   phoneNumber = phoneNumber.replace(/^(84|\+84)/, '0');
   return phoneNumber;
 };
+const objectIDValidation = (id) => {
+  return mongoose.Types.ObjectId.isValid(id);
+};
 
 module.exports = {
   dateValidation,
@@ -50,4 +54,5 @@ module.exports = {
   projectNameValidation,
   normalizeHumanName,
   formatPhoneNumber,
+  objectIDValidation,
 };

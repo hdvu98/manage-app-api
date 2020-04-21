@@ -50,6 +50,39 @@ module.exports = {
       })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
-  updateMember: (req, res, next) => {},
+  updateMember: (req, res, next) => {
+    var { full_name, phone_number, birthday } = req.body;
+    var member = {};
+    if (full_name) {
+      full_name = normalizeHumanName(full_name);
+      if (!fullNameValidation(full_name))
+        return res.status(400).send({
+          message: 'full_name format is invalid',
+        });
+      member = { ...member, full_name: full_name };
+    }
+    if (phone_number) {
+      if (!phoneNumberValidation(phone_number))
+        return res.status(400).send({
+          message: 'phonenumber format is invalid',
+        });
+      phone_number = formatPhoneNumber(phone_number);
+      member = { ...member, phone_number: phone_number };
+    }
+    if (birthday) {
+      if (!dateValidation(birthday))
+        return res.status(400).send({
+          message: 'birthday format is invalid',
+        });
+      member = { ...member, birthday: birthday };
+    }
+
+    console.log(member);
+    Member.update({ _id: req.params.id }, member)
+      .then((data) => {
+        return res.send(data);
+      })
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
   remove: (req, res, next) => {},
 };

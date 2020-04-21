@@ -1,4 +1,5 @@
 const Member = require('./../models/Member.model');
+const moment = require('moment');
 const {
   dateValidation,
   fullNameValidation,
@@ -74,7 +75,7 @@ module.exports = {
         return res.status(400).send({
           message: 'birthday format is invalid',
         });
-      member = { ...member, birthday: new Date(birthday) };
+      member = { ...member, birthday };
     }
     Member.update({ _id: req.params.id }, member)
       .then((data) => {

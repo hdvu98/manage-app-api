@@ -23,6 +23,7 @@ db.mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() => {
     console.log('Connected to the database');
@@ -32,7 +33,8 @@ db.mongoose
     process.exit();
   });
 
-require('./routes/Member.route')(app);
+const memberRouter = require('./routes/Member.route');
+app.use('/member', memberRouter);
 app.listen(PORT, () => {
   console.log(`Server is up and running on port numner  ${PORT}`);
 });

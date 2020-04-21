@@ -84,5 +84,11 @@ module.exports = {
       })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
-  remove: (req, res, next) => {},
+  remove: (req, res, next) => {
+    const { id } = req.params;
+    if (!id) return res.status(400).send({ message: 'invaid id' });
+    Member.delete({ _id: id })
+      .then((data) => res.send({ message: `removed the member: ${id}` }))
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
 };

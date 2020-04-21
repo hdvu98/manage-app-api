@@ -86,5 +86,17 @@ module.exports = {
       })
       .catch((err) => res.status(400).send({ message: err.message }));
   },
-  remove: (req, res, next) => {},
+  remove: (req, res, next) => {
+    const { id } = req.params;
+    if (!id) return res.status(400).send({ message: 'invaid id' });
+    Project.delete({ _id: id })
+      .then((data) => {
+        if (data) return res.send({ message: `removed the project: ${id}` });
+        else
+          return res
+            .status(400)
+            .send({ message: 'the project id is not exits' });
+      })
+      .catch((err) => res.status(400).send({ message: err.message }));
+  },
 };

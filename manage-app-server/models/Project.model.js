@@ -30,11 +30,13 @@ ProjectSchema.methods.assign = function (member) {
   return this.save();
 };
 ProjectSchema.methods.removeMember = function (member) {
-  if (!this.assignees.includes(member))
+  var members = _.clone(this.assignees);
+  if (!members.includes(member))
     throw new Error('member is not exists in the project');
-  this.assignees = _.remove(this.assignees, function (id) {
-    return id === member;
+  _.remove(members, function (id) {
+    return id == member;
   });
+  this.assignees = members;
   return this.save();
 };
 ProjectSchema.statics = {
